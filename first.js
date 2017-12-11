@@ -1,19 +1,20 @@
 /**
-* A draw.io plugin for inserting a custom text (or ellipse) element,
-* either by keyboard Ctrl+Shift+T (or Ctrl+Shift+Q) or by menu
+* A draw.io plugin trying to save a graph
 */
 Draw.loadPlugin(function(ui) {
     
     // Adds resources for actions
-    mxResources.parse('myFirstPlugin=Plu-Plugin');
+    mxResources.parse('myFirstPlugin=Plu-Plugin Save');
     
     // Adds action : myFirstPlugin
     ui.actions.addAction('myFirstPlugin', function() {
-        alert("Hi there"); 
+        var encoder = new mxCodec();
+        var node = encoder.encode(graph.getModel());
+        mxUtils.popup(mxUtils.getPrettyXml(node), true);
     });
     
     // Adds menu
-    ui.menubar.addMenu('My Menu', function(menu, parent) {
+    ui.menubar.addMenu('My Save', function(menu, parent) {
         ui.menus.addMenuItem(menu, 'myFirstPlugin');
     });
 
